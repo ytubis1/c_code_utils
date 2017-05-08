@@ -10,8 +10,6 @@ typedef struct QueueList_t
 	void *head;
 	void *tail;
 	void *lock;
-	pthread_mutex_t mutex;
-	pthread_cond_t cond;
 }QueueList_t;
 
 typedef struct Entry_t
