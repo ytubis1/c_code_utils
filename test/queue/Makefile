@@ -1,7 +1,7 @@
 CC_ ?= gcc
 CCP ?= g++
 TOOLCHAIN ?= gcc
-PLATFORM ?= linux
+PLATFORM = linux
 ECHO = echo
 BUILD_OUTPUT := output 
 GOAL = queue_test.exe
@@ -23,9 +23,9 @@ INCLUDE_DIR	+= -I$(PL_DIR)/memory/include  -I$(PL_DIR)/logger/include  -I$(PL_DI
 #---------------------------------------------------------------------------
 # C source files
 #---------------------------------------------------------------------------
-C_SRC       += $(PL_DIR)/memory/linux/memory_pl.c
-C_SRC       += $(PL_DIR)/logger/linux/logger_pl.c
-C_SRC       += $(PL_DIR)/lock/linux/lock_pl.c
+C_SRC       += $(PL_DIR)/memory/$(PLATFORM)/memory_pl.c
+C_SRC       += $(PL_DIR)/logger/$(PLATFORM)/logger_pl.c
+C_SRC       += $(PL_DIR)/lock/$(PLATFORM)/lock_pl.c
 C_SRC       += $(UTIL_DIR)/queue/queue.c
 
 #---------------------------------------------------------------------------
