@@ -56,4 +56,4 @@ void LOCK_PL_term(void *inHandle)
 	Lock_pl_t *lock = (Lock_pl_t *)inHandle;
 	pthread_mutex_destroy(&lock->mutex);
 	pthread_cond_destroy(&lock->cond);
-} 
+}

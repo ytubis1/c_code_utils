@@ -69,4 +69,4 @@ void LOGGER_PL_term()
 {
 	s_fullLogPath = NULL;
 	pthread_mutex_destroy(&s_mutex);
-} 
+}
