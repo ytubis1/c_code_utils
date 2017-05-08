@@ -8,15 +8,15 @@
 
 #define FULL_LOG_PATH "log.log"
 #define MAX_LOG_PRINT_SIZE 2048
-static char *s_fullLogPath;
 static pthread_mutex_t s_mutex;
+static FILE *s_fileHandler;
 
-void LOGGER_PL_init(int isPrintToLog)
+void LOGGER_PL_init(int isPrintToLogFile)
 {
-	if (isPrintToLog)
-		s_fullLogPath = FULL_LOG_PATH;
-	else
-		s_fullLogPath = NULL;
+    s_fileHandler = NULL;
+
+	if (isPrintToLogFile)
+	    s_fileHandler = fopen(FULL_LOG_PATH, "w");
 
 	pthread_mutex_init(&s_mutex, NULL);
 }
@@ -26,9 +26,11 @@ static void printToConsole(char *logMsgBuffer)
 	printf("%s", logMsgBuffer);
 }
 
-static void printToLog(char *logMsgBuffer)
+static size_t printToLogFile(char *logMsgBuffer, size_t logMsgBufferSize)
 {
-	return;
+    size_t ret = fwrite(logMsgBuffer, 1, logMsgBufferSize, s_fileHandler);
+    fflush(s_fileHandler);
+	return ret;
 }
 
 static void createLogBuffer (const char *format, va_list args)
@@ -48,8 +50,8 @@ static void createLogBuffer (const char *format, va_list args)
 		msgBuf[stringEnd + 1] = '\0';
 
 		printToConsole(msgBuf);
-		if (s_fullLogPath)
-			printToLog(msgBuf);
+		if (s_fileHandler)
+			printToLogFile(msgBuf, stringEnd);
 
 	}
 }
@@ -67,6 +69,7 @@ void LOGGER_PL_log(char *format, ...)
 
 void LOGGER_PL_term()
 {
-	s_fullLogPath = NULL;
+	fclose(s_fileHandler);
+	s_fileHandler = NULL;
 	pthread_mutex_destroy(&s_mutex);
 }

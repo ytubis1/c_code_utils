@@ -7,7 +7,7 @@ extern "C"
 #endif
 
 	// handle global file for the object, no need to context
-void LOGGER_PL_init();
+void LOGGER_PL_init(int isPrintToLogFile);
 void LOGGER_PL_log(char *format, ...);
 void LOGGER_PL_term();
 

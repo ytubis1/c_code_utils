@@ -37,7 +37,7 @@ int main()
 
 	// init queue
 	QUEUE_init(&queueHandle);
-	LOGGER_PL_init(0);
+	LOGGER_PL_init(0); // set 1 to print to log
 	pthread_create(&g_eventThreadListener, NULL, &eventListener, NULL);
 
 	while(isStop == 0)
